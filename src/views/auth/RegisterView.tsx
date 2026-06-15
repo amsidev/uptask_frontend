@@ -53,7 +53,7 @@ export default function RegisterView() {
           <input
             id="email"
             type="email"
-            placeholder="Enter emial"
+            placeholder="Enter email"
             className="w-full p-3  border-gray-300 border"
             {...register("email", {
               required: "Email is required",
@@ -140,6 +140,10 @@ export default function RegisterView() {
             to={'/auth/login'}
             className="text-center text-gray-300 font-normal"
         >Already have an account? <span className="text-white font-bold">Sign In now</span></Link>
+        <Link
+            to={'/auth/forgot-password'}
+            className="text-center text-gray-300 font-normal"
+        >Forgot your password? <span className="text-white font-bold">Reset</span></Link>
       </nav>      
     </>
   )
