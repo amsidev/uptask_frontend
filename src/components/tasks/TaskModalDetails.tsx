@@ -28,21 +28,21 @@ export default function TaskModalDetails() {
     })
 
     const queryClient = useQueryClient();
-    const {mutate} = useMutation({
+    const { mutate } = useMutation({
         mutationFn: updateStatus,
         onError: (error) => {
             toast.error(error.message)
         },
         onSuccess: (data) => {
             toast.success(data)
-            queryClient.invalidateQueries({queryKey: ['task', taskId]})
-            queryClient.invalidateQueries({queryKey: ["project", projectId]})
+            queryClient.invalidateQueries({ queryKey: ['task', taskId] })
+            queryClient.invalidateQueries({ queryKey: ["project", projectId] })
         }
     })
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const status = e.target.value as TaskStatus
-        const data = { projectId, taskId: taskId!, status}
+        const data = { projectId, taskId: taskId!, status }
         mutate(data)
     }
 
@@ -91,6 +91,20 @@ export default function TaskModalDetails() {
                                     >{data.name}
                                     </DialogTitle>
                                     <p className='text-lg text-slate-500 mb-2'>Description: {data.description}</p>
+
+                                    <p className='text-lg text-slate-500 mb-2'>History changes:</p>
+
+                                    <ul className="list-decimal">
+                                        {data.completedBy.map((activityLog) => (
+                                            <li key={activityLog._id}>
+                                                <span
+                                                    className="font-bold text-slate-600"
+                                                >{statusTranslations[activityLog.status]} </span>
+                                                by: {activityLog.user.name}
+                                            </li>
+                                        ))}
+                                    </ul>
+
                                     <div className='my-5 space-y-3'>
                                         <label className='font-bold'>Status:</label>
 
